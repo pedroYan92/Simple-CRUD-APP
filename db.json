@@ -1,0 +1,39 @@
+{
+  "costumers": [
+    {
+      "id": 1,
+      "name": "Pedro G. Yanez",
+      "email": "pedro@gmail.com",
+      "number": "973777604",
+      "address": "Rua Manoel dias do Campo,40"
+    },
+    {
+      "id": 3,
+      "name": "Fernando Lacerda",
+      "email": "fernando@email.com",
+      "number": "123456789",
+      "address": "Av. Celso Garcia, 1500"
+    },
+    {
+      "id": 5,
+      "name": "Paulo Figueiredo Filho",
+      "email": "paulo@gmail.com",
+      "number": "0132321345",
+      "address": "rua alguma coaisa , 300"
+    },
+    {
+      "id": 6,
+      "name": "José Alberto Filho",
+      "email": "jose@email.com",
+      "number": "0231549821",
+      "address": "Rua alguma coisa, 200"
+    },
+    {
+      "id": 9,
+      "name": "Letíca Pereira Carvalho",
+      "email": "leticia@email.com",
+      "number": "321564321",
+      "address": "Rua Alguma Coisa, 214"
+    }
+  ]
+}
