@@ -3,6 +3,7 @@ import './App.css';
 import Form from './Form';
 import Table from './Table';
 import api from '../service/base_URL';
+import Footer from './Footer';
 
 function App() {
   useEffect(getCostumers, []);
@@ -95,6 +96,7 @@ function App() {
           models={models}
         />
       </div>
+      <Footer />
     </div>
   );
 }
