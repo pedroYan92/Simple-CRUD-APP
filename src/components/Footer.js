@@ -1,10 +1,11 @@
-import React from 'react';
+import React from "react";
 
 export default function Footer() {
+  const year = new Date().getFullYear();
   return (
-    <div className='footer-container'>
+    <div className="footer-container">
       <p>
-        Created by <a href='https://www.pedroyan.com/'>pedroYan</a> 2021 | All
+        Created by <a href="https://www.pedroyan.com/">pedroYan</a> {year} | All
         rights reserved
       </p>
     </div>

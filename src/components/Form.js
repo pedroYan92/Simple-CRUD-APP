@@ -1,41 +1,45 @@
-import React from 'react';
+import React from "react";
 
-function Form(props) {
-  const { setModel, model, handleSubmit, actions } = props;
-
+function Form({ inputsForm, setInputsForm, handleSubmit, TypeFormAction }) {
   return (
-    <form className='addForm' onSubmit={handleSubmit}>
-      <h1>{actions}</h1>
+    <form className="addForm" onSubmit={handleSubmit}>
+      <h1>{TypeFormAction}</h1>
       <label>Name</label>
       <input
-        type='text'
-        name='name'
-        value={model.name}
-        onChange={(e) => setModel({ ...model, name: e.target.value })}
+        type="text"
+        name="name"
+        value={inputsForm?.name}
+        onChange={(e) => setInputsForm({ ...inputsForm, name: e.target.value })}
       />
       <label>Email</label>
       <input
-        type='text'
-        name='email'
-        value={model.email}
-        onChange={(e) => setModel({ ...model, email: e.target.value })}
+        type="text"
+        name="email"
+        value={inputsForm?.email}
+        onChange={(e) =>
+          setInputsForm({ ...inputsForm, email: e.target.value })
+        }
       />
       <label>Number</label>
       <input
-        type='number'
-        name='number'
-        value={model.number}
-        onChange={(e) => setModel({ ...model, number: e.target.value })}
+        type="number"
+        name="number"
+        value={inputsForm?.number}
+        onChange={(e) =>
+          setInputsForm({ ...inputsForm, number: e.target.value })
+        }
       />
       <label>Address</label>
       <input
-        type='text'
-        name='address'
-        value={model.address}
-        onChange={(e) => setModel({ ...model, address: e.target.value })}
+        type="text"
+        name="address"
+        value={inputsForm?.address}
+        onChange={(e) =>
+          setInputsForm({ ...inputsForm, address: e.target.value })
+        }
       />
 
-      <button>Submit Costumer</button>
+      <button type="submit">Submit</button>
     </form>
   );
 }

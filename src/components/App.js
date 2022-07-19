@@ -1,99 +1,78 @@
-import React, { useEffect, useState } from 'react';
-import './App.css';
-import Form from './Form';
-import Table from './Table';
-import api from '../service/base_URL';
-import Footer from './Footer';
+import React, { useEffect, useState } from "react";
+import "./App.css";
+import Form from "./Form";
+import Table from "./Table";
+import api from "../service/base_URL";
+import Footer from "./Footer";
 
 function App() {
-  useEffect(getCostumers, []);
+  const initialStateInputsForms = {
+    name: "",
+    email: "",
+    number: "",
+    address: "",
+  };
 
-  const [models, setModels] = useState([]);
+  const [costumers, setCostumers] = useState([]);
 
-  const [model, setModel] = useState({
-    name: '',
-    email: '',
-    number: '',
-    address: '',
-  });
+  const [inputsForm, setInputsForm] = useState(initialStateInputsForms);
 
-  const [actions, setActions] = useState('Add Costumer');
+  const [TypeFormAction, setTypeFormAction] = useState("Create costumer");
 
-  async function editCostumers(model) {
-    setActions('Edit Costumer');
-
-    const response = await api.get(`/costumers/${model.id}`);
-    console.log(response);
-
-    setModel({
-      id: response.data.id,
-      name: response.data.name,
-      email: response.data.email,
-      number: response.data.number,
-      address: response.data.address,
-    });
-  }
-
-  function getCostumers() {
-    api
-      .get(`/costumers`)
-      .then((res) => setModels(res.data))
-      .catch(window.alert);
-  }
-
-  async function handleSubmit(e) {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (model.id !== undefined) {
-      const response = await api
-        .put(`/costumers/${model.id}`, model)
-        .then(
-          getCostumers,
-          setModel({
-            name: '',
-            email: '',
-            number: '',
-            address: '',
-          })
-        )
-        .catch(window.alert);
-      console.log(response);
-    } else {
-      const response = await api
-        .post(`/costumers`, model)
-        .then(
-          getCostumers,
-          setModel({
-            name: '',
-            email: '',
-            number: '',
-            address: '',
-          })
-        )
-        .catch(window.alert);
-      console.log(response);
-    }
-  }
 
-  async function deleteCostumer(model) {
-    await api.delete(`/costumers/${model.id}`);
-    getCostumers();
-  }
+    try {
+      if (inputsForm.id !== undefined) {
+        const { data: editedData } = await api.put(
+          `/costumers/${inputsForm.id}`,
+          inputsForm
+        );
+        setCostumers(
+          costumers.map((item) =>
+            item.id === editedData.id ? editedData : item
+          )
+        );
+      } else {
+        const { data: newData } = await api.post(`/costumers`, inputsForm);
+
+        setCostumers([...costumers, newData]);
+      }
+      setTypeFormAction("Create costumer");
+      setInputsForm(initialStateInputsForms);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    (async () => {
+      try {
+        const { data } = await api.get("/costumers");
+        setCostumers(data);
+      } catch (error) {
+        window.alert(error);
+      }
+    })();
+  }, []);
 
   return (
-    <div className='App'>
+    <div className="App">
       <h1>Simple CRUD App</h1>
-      <div className='app-container'>
+      <div className="app-container">
         <Form
+          setInputsForm={setInputsForm}
+          inputsForm={inputsForm}
+          TypeFormAction={TypeFormAction}
+          setTypeFormAction={setTypeFormAction}
           handleSubmit={handleSubmit}
-          setModel={setModel}
-          model={model}
-          actions={actions}
         />
         <Table
-          deleteCostumer={deleteCostumer}
-          editCostumers={editCostumers}
-          model={model}
-          models={models}
+          setTypeFormAction={setTypeFormAction}
+          inputsForm={inputsForm}
+          setInputsForm={setInputsForm}
+          costumers={costumers}
+          setCostumers={setCostumers}
+          initialStateInputsForms={initialStateInputsForms}
         />
       </div>
       <Footer />

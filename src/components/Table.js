@@ -1,43 +1,67 @@
-import React from 'react'
+import React from "react";
+import api from "../service/base_URL";
 
+function Table({
+  costumers,
+  setInputsForm,
+  setCostumers,
+  initialStateInputsForms,
+  setTypeFormAction,
+}) {
+  async function fillInputsForm(model) {
+    setInputsForm({
+      id: model.id,
+      name: model.name,
+      email: model.email,
+      number: model.number,
+      address: model.address,
+    });
+  }
 
-function Table(props) {
+  async function deleteCostumer(model) {
+    await api.delete(`/costumers/${model.id}`);
+    setCostumers(costumers.filter((costumer) => costumer.id !== model.id));
+    setInputsForm(initialStateInputsForms);
+    setTypeFormAction("Create costumer");
+  }
 
-    const {deleteCostumer, editCostumers, models,} = props
-
-    
-
-    return (
-        <div className='container-list'>
-          <h2>Costumers List</h2>
-          <table>
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Number</th>
-                <th>Address</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              {models.map((model) => (
-                <tr key={model.id}>
-                  <td>{model.name}</td>
-                  <td>{model.email}</td>
-                  <td>{model.number}</td>
-                  <td>{model.address}</td>
-                  <td>
-                    <button onClick={() => editCostumers(model)}>Edit</button>
-                    <button onClick={() => deleteCostumer(model)}>Delete</button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-    )
+  return (
+    <div className="container-list">
+      <h2>Costumers List</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Number</th>
+            <th>Address</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {costumers.map((item) => (
+            <tr key={item.id}>
+              <td>{item.name}</td>
+              <td>{item.email}</td>
+              <td>{item.number}</td>
+              <td>{item.address}</td>
+              <td>
+                <button
+                  onClick={() => {
+                    setTypeFormAction("Update Costumer");
+                    fillInputsForm(item);
+                  }}
+                >
+                  Edit
+                </button>
+                <button onClick={() => deleteCostumer(item)}>Delete</button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
 }
 
-export default Table
+export default Table;
